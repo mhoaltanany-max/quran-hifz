@@ -3,6 +3,11 @@ name: بناء تطبيق أندرويد
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "data-raw/**"
+      - ".github/workflows/fetch-data.yml"
+      - "tools/**"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
