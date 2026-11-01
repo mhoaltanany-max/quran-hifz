@@ -1,5 +1,5 @@
 // رفيق الحفظ: يخزّن التطبيق كاملًا على الجهاز ليعمل بدون إنترنت.
-const VERSION = "hifz-v1";
+const VERSION = "hifz-v2";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {

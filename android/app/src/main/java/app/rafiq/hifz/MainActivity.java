@@ -68,9 +68,9 @@ public class MainActivity extends Activity {
     @Override
     @SuppressWarnings("deprecation")
     public void onBackPressed() {
-        // داخل صفحة المصحف: زر الرجوع يعيد إلى القائمة بدل إغلاق التطبيق.
+        // زر الرجوع: يغلق نافذة التفسير، ثم صفحة المصحف، ثم يعود إلى «اليوم»، ثم يخرج.
         web.evaluateJavascript(
-            "(function(){var r=document.getElementById('reader');if(r&&!r.hidden){document.getElementById('back').click();return 'handled';}return 'exit';})()",
+            "(window.__hifzBack ? window.__hifzBack() : 'exit')",
             value -> { if (value == null || !value.contains("handled")) finish(); });
     }
 }

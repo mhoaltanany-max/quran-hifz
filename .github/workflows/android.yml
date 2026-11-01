@@ -28,6 +28,9 @@ jobs:
         with:
           gradle-version: "8.7"
 
+      - name: بناء ملف التطبيق
+        run: python3 tools/build.py
+
       - name: نسخ ملفات التطبيق
         run: |
           mkdir -p android/app/src/main/assets

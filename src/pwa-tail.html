@@ -1,0 +1,21 @@
+<div id="installBar" hidden style="position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))">
+  <div style="max-width:680px;margin:0 auto 8px;background:var(--accent);color:var(--accent-ink);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px" dir="rtl">
+    <span style="flex:1">ثبّت «رفيق الحفظ» على جهازك ليعمل كتطبيق وبدون إنترنت.</span>
+    <button id="installBtn" style="border:0;border-radius:9px;padding:8px 14px;background:var(--accent-ink);color:var(--accent);font-weight:600">تثبيت</button>
+    <button id="installX" aria-label="إغلاق" style="border:0;background:none;color:inherit;font-size:1.2rem;padding:4px 6px">×</button>
+  </div>
+</div>
+<script>
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+(function(){
+  let deferred = null; const bar = document.getElementById("installBar");
+  const reader = () => !document.getElementById("reader").hidden;
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!reader()) bar.hidden = false; });
+  document.getElementById("installBtn").onclick = async () => { if (!deferred) return; bar.hidden = true; deferred.prompt(); try { await deferred.userChoice; } catch (e) {} deferred = null; };
+  document.getElementById("installX").onclick = () => { bar.hidden = true; };
+  window.addEventListener("appinstalled", () => { bar.hidden = true; });
+  new MutationObserver(() => { if (reader()) bar.hidden = true; }).observe(document.getElementById("reader"), { attributes: true, attributeFilter: ["hidden"] });
+})();
+</script>
